@@ -4,12 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trending Events - TechEvent</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --trending-primary: #f59e0b;
-            --trending-accent: #ec4899;
-            --trending-light: #fffbeb;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #06b6d4;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --bg: #f9fafb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #333;
+            line-height: 1.6;
         }
 
         /* NAVBAR */
@@ -41,13 +64,13 @@
         
         .navbar-brand i {
             font-size: 1.5rem;
-            color: #2563eb;
+            color: var(--primary);
         }
         
         .navbar-brand h1 {
             font-size: 1.5rem;
             font-weight: bold;
-            background: linear-gradient(90deg, #2563eb, #06b6d4);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -72,7 +95,7 @@
         
         .navbar-menu a:hover,
         .navbar-menu a.active {
-            color: #2563eb;
+            color: var(--primary);
         }
         
         .navbar-menu a.active::after {
@@ -82,7 +105,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: #2563eb;
+            background: var(--primary);
         }
 
         /* HAMBURGER */
@@ -93,7 +116,10 @@
             user-select: none;
         }
 
-        main { padding-top: 80px; padding-bottom: 60px; }
+        main { 
+            padding-top: 80px; 
+            padding-bottom: 60px; 
+        }
 
         /* TRENDING STYLING */
         .trending-container {
@@ -110,14 +136,19 @@
 
         .trending-header h1 {
             font-size: 3.5rem;
-            background: linear-gradient(135deg, var(--trending-primary), var(--trending-accent));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
         }
 
-        .trending-header p { font-size: 1.1rem; color: #666; }
+        .trending-header p { 
+            font-size: 1.1rem; 
+            color: var(--gray); 
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
         .trending-filter {
             display: flex;
@@ -137,15 +168,18 @@
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .trending-filter-btn:hover,
         .trending-filter-btn.active {
-            background: var(--trending-primary);
+            background: var(--primary);
             color: white;
-            border-color: var(--trending-primary);
+            border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
         .trending-grid {
@@ -163,6 +197,8 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .trending-card:hover {
@@ -174,7 +210,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: linear-gradient(135deg, var(--trending-primary), var(--trending-accent));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 8px 16px;
             border-radius: 50px;
@@ -184,16 +220,39 @@
             animation: bounce 2s infinite;
         }
 
-        @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);} }
+        @keyframes bounce { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-5px); } 
+        }
 
-        .trending-image { width: 100%; height: 200px; object-fit: cover; transition: transform 0.3s ease; }
-        .trending-card:hover .trending-image { transform: scale(1.1); }
+        .trending-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
 
-        .trending-content { padding: 25px; }
+        .trending-image { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.3s ease; 
+        }
+        
+        .trending-card:hover .trending-image { 
+            transform: scale(1.1); 
+        }
+
+        .trending-content { 
+            padding: 25px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
         .trending-category {
             display: inline-block;
-            background: var(--trending-light);
-            color: var(--trending-primary);
+            background: #eff6ff;
+            color: var(--primary);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 0.8rem;
@@ -201,15 +260,86 @@
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            align-self: flex-start;
         }
 
-        .trending-title { font-size: 1.3rem; font-weight: 700; color: #1f2937; margin-bottom: 10px; line-height: 1.4; }
+        .trending-title { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            color: var(--dark); 
+            margin-bottom: 10px; 
+            line-height: 1.4; 
+        }
 
-        .trending-footer { display: flex; gap: 10px; }
-        .trending-btn { flex:1; padding:12px; border:2px solid var(--trending-primary); background:white; color:var(--trending-primary); border-radius:8px; cursor:pointer; font-weight:600; transition:all 0.3s ease; font-size:0.95rem; }
-        .trending-btn.primary { background: linear-gradient(135deg, var(--trending-primary), var(--trending-accent)); color:white; border:none; }
-        .trending-btn:hover { transform: translateY(-2px); }
-        .trending-btn.primary:hover { box-shadow:0 10px 25px rgba(245,158,11,0.3); }
+        .trending-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        .trending-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .trending-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trending-footer { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: auto;
+        }
+        
+        .trending-btn { 
+            flex:1; 
+            padding:12px; 
+            border:2px solid var(--primary); 
+            background:white; 
+            color:var(--primary); 
+            border-radius:8px; 
+            cursor:pointer; 
+            font-weight:600; 
+            transition:all 0.3s ease; 
+            font-size:0.95rem; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .trending-btn.primary { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            color:white; 
+            border:none; 
+        }
+        
+        .trending-btn:hover { 
+            transform: translateY(-2px); 
+        }
+        
+        .trending-btn.primary:hover { 
+            box-shadow:0 10px 25px rgba(37, 99, 235, 0.3); 
+        }
+
+        .trending-btn.saved {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .trending-btn.registered {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
 
         /* STATS & BANNER */
         .trending-stats {
@@ -219,12 +349,32 @@
             margin: 60px 0;
         }
 
-        .stat-box { background: linear-gradient(135deg, var(--trending-primary), var(--trending-accent)); color: white; padding: 30px; border-radius: 12px; text-align:center; }
-        .stat-box-number { font-size:2.5rem; font-weight:700; margin-bottom:5px; }
-        .stat-box-label { font-size:0.95rem; opacity:0.95; }
+        .stat-box { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            color: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            text-align:center; 
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-box-number { 
+            font-size:2.5rem; 
+            font-weight:700; 
+            margin-bottom:5px; 
+        }
+        
+        .stat-box-label { 
+            font-size:0.95rem; 
+            opacity:0.95; 
+        }
 
         .featured-banner {
-            background: linear-gradient(135deg, var(--trending-primary), var(--trending-accent));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 20px;
             padding: 50px 40px;
             color: white;
@@ -246,15 +396,294 @@
             animation: float 8s ease-in-out infinite;
         }
 
-        .featured-banner h2 { font-size: 2.5rem; margin-bottom: 15px; position: relative; z-index: 1; }
-        .featured-banner p { font-size: 1.1rem; margin-bottom: 30px; position: relative; z-index: 1; opacity:0.95; }
-        .featured-btn { background:white; color:var(--trending-primary); border:none; padding:15px 40px; border-radius:50px; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.3s ease; position: relative; z-index:1; }
-        .featured-btn:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(0,0,0,0.2); }
+        .featured-banner h2 { 
+            font-size: 2.5rem; 
+            margin-bottom: 15px; 
+            position: relative; 
+            z-index: 1; 
+        }
+        
+        .featured-banner p { 
+            font-size: 1.1rem; 
+            margin-bottom: 30px; 
+            position: relative; 
+            z-index: 1; 
+            opacity:0.95; 
+        }
+        
+        .featured-btn { 
+            background:white; 
+            color:var(--primary); 
+            border:none; 
+            padding:15px 40px; 
+            border-radius:50px; 
+            font-size:1rem; 
+            font-weight:700; 
+            cursor:pointer; 
+            transition:all 0.3s ease; 
+            position: relative; 
+            z-index:1; 
+        }
+        
+        .featured-btn:hover { 
+            transform:translateY(-3px); 
+            box-shadow:0 15px 40px rgba(0,0,0,0.2); 
+        }
 
         /* ANIMATIONS */
-        @keyframes fadeInDown { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
-        @keyframes fadeInUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-        @keyframes float {0%,100%{transform:translateY(0px);}50%{transform:translateY(-30px);} }
+        @keyframes fadeInDown { 
+            from {opacity:0; transform:translateY(-20px);} 
+            to {opacity:1; transform:translateY(0);} 
+        }
+        
+        @keyframes fadeInUp { 
+            from {opacity:0; transform:translateY(20px);} 
+            to {opacity:1; transform:translateY(0);} 
+        }
+        
+        @keyframes float {
+            0%,100%{transform:translateY(0px);}
+            50%{transform:translateY(-30px);}
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: #f3f4f6;
+            color: var(--dark);
+            border: 2px solid #e5e7eb;
+        }
+
+        .modal-btn.submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--error);
+        }
+
+        /* SAVED EVENTS SECTION */
+        .saved-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        /* SEARCH BAR */
+        .trending-search {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .trending-search input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .trending-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .trending-search i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #d1d5db;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #374151;
+            max-width: 1200px;
+            margin: 0 auto;
+            color: #9ca3af;
+        }
 
         /* RESPONSIVE */
         @media(max-width:768px){
@@ -263,8 +692,23 @@
             .featured-banner { padding:30px 20px; }
             .featured-banner h2 { font-size:1.8rem; }
             .hamburger { display:block; }
-            .navbar-menu { display:none; flex-direction:column; position:absolute; top:70px; right:20px; background:white; padding:15px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.2); gap:1rem; z-index:100; }
+            .navbar-menu { 
+                display:none; 
+                flex-direction:column; 
+                position:absolute; 
+                top:70px; 
+                right:20px; 
+                background:white; 
+                padding:15px; 
+                border-radius:10px; 
+                box-shadow:0 8px 20px rgba(0,0,0,0.2); 
+                gap:1rem; 
+                z-index:100; 
+            }
             .navbar-menu.show { display:flex; }
+            .trending-filter-btn { padding: 10px 20px; }
+            .trending-footer { flex-direction: column; }
+            .modal-content { width: 95%; padding: 20px; }
         }
     </style>
 </head>
@@ -283,50 +727,114 @@
                 <li><a href="index.html#events-list">Events</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="trending.html" class="active">Trending</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
                 <li><a href="games.html">Games</a></li>
                 <li><a href="register.html">Register</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="trending-container">
-        <div class="trending-header">
-            <h1>Trending Events</h1>
-            <p>Don't miss the hottest tech events happening right now</p>
-        </div>
-
-        <div class="trending-stats">
-            <div class="stat-box">
-                <div class="stat-box-number">500+</div>
-                <div class="stat-box-label">Attendees This Month</div>
+    <main>
+        <div class="trending-container">
+            <div class="trending-header">
+                <h1>Trending Events</h1>
+                <p>Don't miss the hottest tech events happening right now. From AI conferences to developer workshops, find your next tech adventure.</p>
             </div>
-            <div class="stat-box">
-                <div class="stat-box-number">15</div>
-                <div class="stat-box-label">Featured Events</div>
+
+            <div class="trending-stats">
+                <div class="stat-box">
+                    <div class="stat-box-number">500+</div>
+                    <div class="stat-box-label">Attendees This Month</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-number">15</div>
+                    <div class="stat-box-label">Featured Events</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-number">98%</div>
+                    <div class="stat-box-label">Success Rate</div>
+                </div>
             </div>
-            <div class="stat-box">
-                <div class="stat-box-number">98%</div>
-                <div class="stat-box-label">Success Rate</div>
+
+            <div class="trending-search">
+                <input type="text" id="searchInput" placeholder="Search events...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="trending-filter">
+                <button class="trending-filter-btn active" data-filter="all">
+                    <i class="fas fa-th-large"></i> All Events
+                </button>
+                <button class="trending-filter-btn" data-filter="workshop">
+                    <i class="fas fa-laptop-code"></i> Workshops
+                </button>
+                <button class="trending-filter-btn" data-filter="conference">
+                    <i class="fas fa-users"></i> Conferences
+                </button>
+                <button class="trending-filter-btn" data-filter="hackathon">
+                    <i class="fas fa-code"></i> Hackathons
+                </button>
+            </div>
+
+            <div class="trending-grid" id="trendingGrid">
+                <!-- Trending cards akan diinsert oleh JS -->
+            </div>
+
+            <div class="saved-section" id="savedSection" style="display: none;">
+                <h2 class="section-title">Your Saved Events</h2>
+                <div class="trending-grid" id="savedEventsGrid">
+                    <!-- Saved events akan diinsert oleh JS -->
+                </div>
+            </div>
+
+            <div class="featured-banner">
+                <h2>🌟 Featured Event</h2>
+                <p>Join our exclusive AI & Machine Learning Conference 2024 with industry leaders and hands-on workshops</p>
+                <button class="featured-btn" id="featuredBtn">Learn More</button>
             </div>
         </div>
+    </main>
 
-        <div class="trending-filter">
-            <button class="trending-filter-btn active" data-filter="all">All Events</button>
-            <button class="trending-filter-btn" data-filter="workshop">Workshops</button>
-            <button class="trending-filter-btn" data-filter="conference">Conferences</button>
-            <button class="trending-filter-btn" data-filter="hackathon">Hackathons</button>
+    <!-- Modal untuk pendaftaran event -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Register for Event</h3>
+                <button class="close-modal" id="closeRegisterModal">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="ticketType">Ticket Type</label>
+                    <select id="ticketType" required>
+                        <option value="">Select ticket type</option>
+                        <option value="general">General Admission - Free</option>
+                        <option value="vip">VIP Pass - $50</option>
+                        <option value="premium">Premium Pass - $100</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn cancel" id="cancelRegister">Cancel</button>
+                    <button type="submit" class="modal-btn submit">Register Now</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="trending-grid" id="trendingGrid">
-            <!-- Trending cards akan diinsert oleh JS -->
-        </div>
-
-        <div class="featured-banner">
-            <h2>🌟 Featured Event</h2>
-            <p>Join our exclusive AI & Machine Learning Conference 2024</p>
-            <button class="featured-btn">Learn More</button>
-        </div>
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <i class="toast-icon"></i>
+        <span class="toast-message"></span>
     </div>
 
     <footer class="footer">
@@ -337,10 +845,10 @@
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
-                <a href="#">Home</a>
-                <a href="#">Events</a>
-                <a href="#">Trending</a>
-                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="index.html#events-list">Events</a>
+                <a href="trending.html">Trending</a>
+                <a href="contact.html">Contact</a>
             </div>
             <div class="footer-section">
                 <h4>Follow Us</h4>
@@ -355,11 +863,338 @@
     </footer>
 
     <script>
+        // Data events
+        const trendingEvents = [
+            {
+                id: 1,
+                title: "AI & Machine Learning Summit 2024",
+                category: "conference",
+                description: "Explore the latest advancements in AI and ML with industry experts and hands-on workshops.",
+                date: "2024-06-15",
+                location: "San Francisco, CA",
+                attendees: 500,
+                trending: true,
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                title: "Web Development Bootcamp",
+                category: "workshop",
+                description: "Intensive 3-day workshop covering modern web development technologies and best practices.",
+                date: "2024-05-20",
+                location: "Online",
+                attendees: 150,
+                trending: true,
+                image: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                title: "Blockchain Hackathon",
+                category: "hackathon",
+                description: "48-hour hackathon focused on building innovative blockchain solutions with $50K in prizes.",
+                date: "2024-07-10",
+                location: "New York, NY",
+                attendees: 300,
+                trending: true,
+                image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 4,
+                title: "UX/UI Design Workshop",
+                category: "workshop",
+                description: "Learn user-centered design principles and create stunning interfaces with industry experts.",
+                date: "2024-06-05",
+                location: "Austin, TX",
+                attendees: 80,
+                trending: false,
+                image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 5,
+                title: "Cloud Computing Conference",
+                category: "conference",
+                description: "Discover the future of cloud technologies with keynote speakers from AWS, Azure, and Google Cloud.",
+                date: "2024-08-22",
+                location: "Seattle, WA",
+                attendees: 400,
+                trending: true,
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 6,
+                title: "Cybersecurity Summit",
+                category: "conference",
+                description: "Join security experts to discuss the latest threats, defense strategies, and emerging technologies.",
+                date: "2024-09-15",
+                location: "Washington, DC",
+                attendees: 350,
+                trending: false,
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        // State management
+        let savedEvents = JSON.parse(localStorage.getItem('savedEvents')) || [];
+        let registeredEvents = JSON.parse(localStorage.getItem('registeredEvents')) || [];
+        let currentEventId = null;
+
+        // DOM elements
+        const trendingGrid = document.getElementById('trendingGrid');
+        const savedEventsGrid = document.getElementById('savedEventsGrid');
+        const savedSection = document.getElementById('savedSection');
+        const filterButtons = document.querySelectorAll('.trending-filter-btn');
+        const searchInput = document.getElementById('searchInput');
+        const registerModal = document.getElementById('registerModal');
+        const closeRegisterModal = document.getElementById('closeRegisterModal');
+        const cancelRegister = document.getElementById('cancelRegister');
+        const registerForm = document.getElementById('registerForm');
+        const toast = document.getElementById('toast');
+        const featuredBtn = document.getElementById('featuredBtn');
+
+        // Function to render events
+        function renderEvents(events, container, showSavedSection = false) {
+            container.innerHTML = '';
+            
+            if (events.length === 0) {
+                container.innerHTML = `
+                    <div class="no-events" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <i class="fas fa-calendar-times" style="font-size: 3rem; color: #d1d5db; margin-bottom: 20px;"></i>
+                        <h3 style="color: #6b7280; margin-bottom: 10px;">No events found</h3>
+                        <p style="color: #9ca3af;">Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            events.forEach(event => {
+                const isSaved = savedEvents.includes(event.id);
+                const isRegistered = registeredEvents.includes(event.id);
+                
+                const eventCard = document.createElement('div');
+                eventCard.className = 'trending-card';
+                eventCard.setAttribute('data-category', event.category);
+                
+                const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                eventCard.innerHTML = `
+                    ${event.trending ? '<div class="trending-badge">Trending</div>' : ''}
+                    <div class="trending-image-container">
+                        <img src="${event.image}" alt="${event.title}" class="trending-image">
+                    </div>
+                    <div class="trending-content">
+                        <span class="trending-category">${event.category}</span>
+                        <h3 class="trending-title">${event.title}</h3>
+                        <p class="trending-description">${event.description}</p>
+                        <div class="trending-meta">
+                            <div class="trending-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>${formattedDate}</span>
+                            </div>
+                            <div class="trending-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${event.location}</span>
+                            </div>
+                        </div>
+                        <div class="trending-footer">
+                            <button class="trending-btn ${isSaved ? 'saved' : ''}" data-id="${event.id}" data-action="save">
+                                <i class="${isSaved ? 'fas' : 'far'} fa-bookmark"></i> ${isSaved ? 'Saved' : 'Save'}
+                            </button>
+                            <button class="trending-btn primary ${isRegistered ? 'registered' : ''}" data-id="${event.id}" data-action="register" ${isRegistered ? 'disabled' : ''}>
+                                <i class="fas fa-ticket-alt"></i> ${isRegistered ? 'Registered' : 'Register'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(eventCard);
+            });
+
+            // Show/hide saved events section
+            if (showSavedSection) {
+                savedSection.style.display = savedEvents.length > 0 ? 'block' : 'none';
+            }
+        }
+
+        // Filter events by category
+        function filterEvents(category) {
+            if (category === 'all') {
+                return trendingEvents;
+            }
+            return trendingEvents.filter(event => event.category === category);
+        }
+
+        // Search events
+        function searchEvents(query) {
+            if (!query) return trendingEvents;
+            
+            const lowercaseQuery = query.toLowerCase();
+            return trendingEvents.filter(event => 
+                event.title.toLowerCase().includes(lowercaseQuery) ||
+                event.description.toLowerCase().includes(lowercaseQuery) ||
+                event.category.toLowerCase().includes(lowercaseQuery) ||
+                event.location.toLowerCase().includes(lowercaseQuery)
+            );
+        }
+
+        // Save event
+        function saveEvent(eventId) {
+            if (savedEvents.includes(eventId)) {
+                // Remove from saved
+                savedEvents = savedEvents.filter(id => id !== eventId);
+                showToast('Event removed from saved events', 'success');
+            } else {
+                // Add to saved
+                savedEvents.push(eventId);
+                showToast('Event saved successfully', 'success');
+            }
+            
+            // Update localStorage
+            localStorage.setItem('savedEvents', JSON.stringify(savedEvents));
+            
+            // Re-render events
+            renderEvents(trendingEvents, trendingGrid);
+            
+            // Update saved events section
+            const savedEventsData = trendingEvents.filter(event => savedEvents.includes(event.id));
+            renderEvents(savedEventsData, savedEventsGrid, true);
+        }
+
+        // Register for event
+        function registerForEvent(eventId) {
+            currentEventId = eventId;
+            registerModal.style.display = 'flex';
+        }
+
+        // Complete registration
+        function completeRegistration(formData) {
+            if (currentEventId) {
+                registeredEvents.push(currentEventId);
+                localStorage.setItem('registeredEvents', JSON.stringify(registeredEvents));
+                
+                showToast('Registration successful!', 'success');
+                registerModal.style.display = 'none';
+                registerForm.reset();
+                
+                // Re-render events
+                renderEvents(trendingEvents, trendingGrid);
+                
+                // Update saved events section
+                const savedEventsData = trendingEvents.filter(event => savedEvents.includes(event.id));
+                renderEvents(savedEventsData, savedEventsGrid, true);
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type) {
+            const toastIcon = toast.querySelector('.toast-icon');
+            const toastMessage = toast.querySelector('.toast-message');
+            
+            toast.className = `toast ${type}`;
+            toastIcon.className = `toast-icon fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`;
+            toastMessage.textContent = message;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize events
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEvents(trendingEvents, trendingGrid);
+            
+            // Load saved events
+            const savedEventsData = trendingEvents.filter(event => savedEvents.includes(event.id));
+            renderEvents(savedEventsData, savedEventsGrid, true);
+            
+            // Filter button event listeners
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Get filter category
+                    const category = button.getAttribute('data-filter');
+                    
+                    // Filter and render events
+                    const filteredEvents = filterEvents(category);
+                    renderEvents(filteredEvents, trendingGrid);
+                });
+            });
+            
+            // Search input event listener
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim();
+                const filteredEvents = searchEvents(query);
+                renderEvents(filteredEvents, trendingGrid);
+            });
+            
+            // Event delegation for save and register buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.trending-btn')) {
+                    const button = e.target.closest('.trending-btn');
+                    const eventId = parseInt(button.getAttribute('data-id'));
+                    const action = button.getAttribute('data-action');
+                    
+                    if (action === 'save') {
+                        saveEvent(eventId);
+                    } else if (action === 'register') {
+                        registerForEvent(eventId);
+                    }
+                }
+            });
+            
+            // Modal event listeners
+            closeRegisterModal.addEventListener('click', () => {
+                registerModal.style.display = 'none';
+            });
+            
+            cancelRegister.addEventListener('click', () => {
+                registerModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === registerModal) {
+                    registerModal.style.display = 'none';
+                }
+            });
+            
+            // Form submission
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    ticketType: document.getElementById('ticketType').value
+                };
+                
+                // Simulate form processing
+                setTimeout(() => {
+                    completeRegistration(formData);
+                }, 1000);
+            });
+            
+            // Featured button event listener
+            featuredBtn.addEventListener('click', () => {
+                showToast('Redirecting to featured event page...', 'success');
+                // In a real application, this would redirect to the featured event page
+            });
+        });
+
         function toggleMenu(){
             document.querySelector(".navbar-menu").classList.toggle("show");
         }
     </script>
-
-    <script src="assets/js/trending.js"></script>
 </body>
 </html>
