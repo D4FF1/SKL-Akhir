@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Games - TechEvent</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-                .navbar {
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 50;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
         
@@ -33,13 +49,13 @@
         }
         
         .navbar-brand i {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #2563eb;
         }
         
         .navbar-brand h1 {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 800;
             background: linear-gradient(90deg, #2563eb, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -78,7 +94,11 @@
             background: #2563eb;
         }
         
-        main { padding-top: 80px; padding-bottom: 60px; }
+        /* Main Content */
+        main { 
+            padding-top: 80px; 
+            padding-bottom: 60px; 
+        }
         
         .games-container {
             min-height: 100vh;
@@ -103,11 +123,13 @@
         .games-header p {
             font-size: 1.2rem;
             opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
@@ -130,7 +152,7 @@
 
         .game-image {
             width: 100%;
-            height: 250px;
+            height: 200px;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
@@ -140,11 +162,11 @@
         }
 
         .game-content {
-            padding: 30px;
+            padding: 25px;
         }
 
         .game-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 10px;
             color: #333;
@@ -159,12 +181,12 @@
 
         .play-btn {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -181,6 +203,7 @@
             transform: scale(0.98);
         }
 
+        /* Modal Styles */
         .game-modal {
             display: none;
             position: fixed;
@@ -194,6 +217,7 @@
             align-items: center;
             justify-content: center;
             animation: fadeIn 0.3s ease;
+            padding: 20px;
         }
 
         .game-modal.active {
@@ -206,7 +230,7 @@
             padding: 40px;
             max-width: 600px;
             width: 95%;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.4s ease;
             position: relative;
@@ -224,6 +248,9 @@
             font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .close-btn:hover {
@@ -247,7 +274,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             user-select: none;
@@ -353,14 +380,145 @@
             color: white;
         }
 
-        .reaction-result {
+        /* Tic Tac Toe Styles */
+        .tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tic-tac-toe-cell {
+            aspect-ratio: 1;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tic-tac-toe-cell:hover {
+            background: #e0e0e0;
+        }
+
+        .tic-tac-toe-cell.x {
+            color: #ff6b6b;
+        }
+
+        .tic-tac-toe-cell.o {
+            color: #4ecdc4;
+        }
+
+        /* Typing Test Styles */
+        .typing-text {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .typing-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin: 20px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .typing-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Snake Game Styles */
+        .snake-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .snake-game {
+            width: 300px;
+            height: 300px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .snake-segment {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #4ecdc4;
+            border-radius: 4px;
+        }
+
+        .snake-food {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        /* Math Challenge Styles */
+        .math-problem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
             text-align: center;
             font-size: 1.5rem;
             font-weight: 700;
-            margin-top: 20px;
             color: #333;
         }
 
+        .math-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .math-option {
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .math-option:hover {
+            background: #e0e0e0;
+        }
+
+        .math-option.correct {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .math-option.incorrect {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Stats and Results */
         .stats {
             background: #f9f9f9;
             padding: 20px;
@@ -375,6 +533,15 @@
             color: #555;
         }
 
+        .reaction-result {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        /* Animations */
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -426,6 +593,51 @@
             }
         }
 
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+            margin-top: 30px;
+            color: #999;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .games-header h1 {
                 font-size: 2.2rem;
@@ -442,6 +654,14 @@
 
             .modal-content {
                 padding: 30px 20px;
+            }
+
+            .navbar-menu {
+                display: none;
+            }
+
+            .navbar-container {
+                padding: 1rem;
             }
         }
     </style>
@@ -469,7 +689,7 @@
     <div class="games-container">
         <div class="games-header">
             <h1>🎮 Mini Games</h1>
-            <p>Play and have fun while waiting for events!</p>
+            <p>Play and have fun while waiting for events! Challenge yourself with our collection of engaging games.</p>
         </div>
 
         <div class="games-grid">
@@ -500,6 +720,36 @@
                     <h2 class="game-title">Reaction Test</h2>
                     <p class="game-description">How fast are your reflexes? Click when the color changes and see your reaction time!</p>
                     <button class="play-btn" onclick="openGame('reaction')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Tic Tac Toe -->
+            <div class="game-card">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=250&fit=crop" alt="Tic Tac Toe" class="game-image">
+                <div class="game-content">
+                    <h2 class="game-title">Tic Tac Toe</h2>
+                    <p class="game-description">The classic game of X's and O's. Challenge the computer in this timeless strategy game!</p>
+                    <button class="play-btn" onclick="openGame('tictactoe')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Typing Test -->
+            <div class="game-card">
+                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=250&fit=crop" alt="Typing Test" class="game-image">
+                <div class="game-content">
+                    <h2 class="game-title">Typing Test</h2>
+                    <p class="game-description">Test your typing speed and accuracy. How many words per minute can you type?</p>
+                    <button class="play-btn" onclick="openGame('typing')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Math Challenge -->
+            <div class="game-card">
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=250&fit=crop" alt="Math Challenge" class="game-image">
+                <div class="game-content">
+                    <h2 class="game-title">Math Challenge</h2>
+                    <p class="game-description">Test your math skills with quick calculations. Solve as many problems as you can in 60 seconds!</p>
+                    <button class="play-btn" onclick="openGame('math')">Play Now</button>
                 </div>
             </div>
         </div>
@@ -558,8 +808,64 @@
         </div>
     </div>
 
+    <!-- Tic Tac Toe Modal -->
+    <div id="tictactoeModal" class="game-modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame('tictactoe')">&times;</button>
+            <h2 style="text-align: center; color: #333; margin-bottom: 20px;">Tic Tac Toe</h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 1.1rem; color: #666;">Current Player: <strong id="currentPlayer">X</strong></p>
+            </div>
+            <div class="tic-tac-toe-board" id="ticTacToeBoard"></div>
+            <button class="play-btn" onclick="resetTicTacToe()" style="margin-top: 20px;">Reset Game</button>
+            <div class="stats" id="tictactoeStats" style="display: none;">
+                <p id="tictactoeResult" style="font-size: 1.3rem;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typing Test Modal -->
+    <div id="typingModal" class="game-modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame('typing')">&times;</button>
+            <h2 style="text-align: center; color: #333; margin-bottom: 20px;">Typing Test</h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 1.1rem; color: #666;">Time: <strong id="typingTime">60</strong>s | Score: <strong id="typingScore">0</strong></p>
+            </div>
+            <div class="typing-text" id="typingText">
+                The quick brown fox jumps over the lazy dog. This sentence contains all the letters in the English alphabet.
+            </div>
+            <textarea class="typing-input" id="typingInput" placeholder="Start typing here..." oninput="checkTypingProgress()"></textarea>
+            <button class="play-btn" onclick="startTypingTest()" id="typingStartBtn">Start Test</button>
+            <div class="stats" id="typingStats" style="display: none;">
+                <p>Your typing speed: <strong id="typingWPM">0</strong> WPM</p>
+                <p>Accuracy: <strong id="typingAccuracy">0</strong>%</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Math Challenge Modal -->
+    <div id="mathModal" class="game-modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame('math')">&times;</button>
+            <h2 style="text-align: center; color: #333; margin-bottom: 20px;">Math Challenge</h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 1.1rem; color: #666;">Time: <strong id="mathTime">60</strong>s | Score: <strong id="mathScore">0</strong></p>
+            </div>
+            <div class="math-problem" id="mathProblem">
+                5 + 7 = ?
+            </div>
+            <div class="math-options" id="mathOptions"></div>
+            <button class="play-btn" onclick="startMathChallenge()" id="mathStartBtn">Start Challenge</button>
+            <div class="stats" id="mathStats" style="display: none;">
+                <p>Your final score: <strong id="finalMathScore">0</strong></p>
+                <p>Correct answers: <strong id="mathCorrect">0</strong>/<strong id="mathTotal">0</strong></p>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="footer" style="margin-top: 0;">
+    <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h4>About TechEvent</h4>
@@ -592,7 +898,6 @@
             <p>&copy; 2025 TechEvent. All rights reserved.</p>
         </div>
     </footer>
-
-    <script src="assets/js/games.js"></script>
+<script src="assets/js/games.js"></script>
 </body>
 </html>
