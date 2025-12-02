@@ -94,7 +94,7 @@
             background: #2563eb;
         }
         
-        /* Main Content */
+        /* Main Content - PERBAIKAN UTAMA */
         main { 
             padding-top: 80px; 
             padding-bottom: 60px; 
@@ -103,7 +103,10 @@
         .games-container {
             min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
+            padding: 100px 20px 40px; /* Diperbaiki padding-top */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .games-header {
@@ -111,6 +114,7 @@
             color: white;
             margin-bottom: 50px;
             animation: fadeInDown 0.8s ease;
+            padding-top: 0; /* Pastikan tidak ada padding tambahan */
         }
 
         .games-header h1 {
